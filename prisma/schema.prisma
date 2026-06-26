@@ -1,0 +1,222 @@
+// Prisma schema for 调酒笔记 (Cocktail Notes)
+// MVP uses SQLite for zero-config local dev. To migrate to PostgreSQL for
+// production, change `provider` to "postgresql" and update DATABASE_URL.
+//
+// NOTE on SQLite limitations (documented for future migration):
+//   - No native enum  -> stored as String, allowed values listed in comments.
+//   - No native array -> stored as JSON string, (de)serialized via lib/serialize.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Core / shared
+// ---------------------------------------------------------------------------
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // bcrypt hash
+  name      String
+  role      String   @default("user") // 'user' | 'admin'
+  mode      String   @default("drinker") // 'drinker' | 'bartender'
+  createdAt DateTime @default(now())
+
+  drinkLogs       DrinkLog[]
+  userIngredients UserIngredient[]
+  cocktailLists   UserCocktailList[]
+  businessLogs    BusinessLog[]
+  barMenu         BarMenuItem[]
+  inventory       InventoryItem[]
+  purchases       PurchaseRecord[]
+}
+
+model Ingredient {
+  id          String  @id @default(cuid())
+  name        String  @unique // 中文名
+  nameEn      String? // 英文名
+  type        String // 'base_spirit'|'liqueur'|'juice'|'syrup'|'mixer'|'garnish'|'other'
+  description String?
+  abv         Float? // 酒精度, null = 无酒精
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+
+  cocktailIngredients CocktailIngredient[]
+  userIngredients     UserIngredient[]
+  inventoryItems      InventoryItem[]
+  purchaseRecords     PurchaseRecord[]
+}
+
+model Cocktail {
+  id           String   @id @default(cuid())
+  name         String   @unique // 中文名
+  nameEn       String? // 英文名
+  slug         String   @unique
+  category     String // 便利店调酒 | IBA-当代经典 | ... (see lib/constants.ts)
+  flavorTags   String   @default("[]") // JSON string[]
+  glassType    String?
+  garnish      String?
+  description  String?
+  instructions String   @default("[]") // JSON string[]
+  imageUrl     String?
+  difficulty   String   @default("easy") // 'easy'|'medium'|'hard'
+  isPublished  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  ingredients   CocktailIngredient[]
+  drinkLogs     DrinkLog[]
+  cocktailLists UserCocktailList[]
+  sales         Sale[]
+  barMenuItems  BarMenuItem[]
+}
+
+model CocktailIngredient {
+  id           String  @id @default(cuid())
+  cocktailId   String
+  ingredientId String
+  amount       String? // '30ml', '适量'
+  unit         String? // 'ml','dash','oz'
+  isOptional   Boolean @default(false)
+  sortOrder    Int     @default(0)
+
+  cocktail   Cocktail   @relation(fields: [cocktailId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([cocktailId, ingredientId])
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String // Markdown
+  category    String?
+  coverUrl    String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Drinker mode (喝酒模式)
+// ---------------------------------------------------------------------------
+
+model DrinkLog {
+  id         String   @id @default(cuid())
+  userId     String
+  cocktailId String? // null = 自创
+  customName String? // 自创酒名
+  loggedAt   DateTime // 记录日期
+  rating     Int      @default(0) // 1-5
+  flavorTags String   @default("[]") // JSON string[]
+  note       String? // 口感/思考自由文本
+  isHomemade Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cocktail Cocktail? @relation(fields: [cocktailId], references: [id], onDelete: SetNull)
+}
+
+model UserIngredient {
+  id           String   @id @default(cuid())
+  userId       String
+  ingredientId String
+  amountNote   String? // '大半瓶','约200ml' (模糊描述)
+  createdAt    DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ingredientId])
+}
+
+model UserCocktailList {
+  id         String   @id @default(cuid())
+  userId     String
+  cocktailId String
+  listType   String // 'favorite' | 'want_to_make'
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cocktail Cocktail @relation(fields: [cocktailId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cocktailId, listType])
+}
+
+// ---------------------------------------------------------------------------
+// Bartender mode (卖酒模式)
+// ---------------------------------------------------------------------------
+
+model BusinessLog {
+  id         String   @id @default(cuid())
+  userId     String
+  loggedDate DateTime
+  note       String?
+  createdAt  DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sales Sale[]
+}
+
+model Sale {
+  id            String   @id @default(cuid())
+  businessLogId String
+  cocktailId    String?
+  quantity      Int      @default(1)
+  unitPrice     Float    @default(0)
+  createdAt     DateTime @default(now())
+
+  businessLog BusinessLog @relation(fields: [businessLogId], references: [id], onDelete: Cascade)
+  cocktail    Cocktail?   @relation(fields: [cocktailId], references: [id], onDelete: SetNull)
+}
+
+model BarMenuItem {
+  id         String   @id @default(cuid())
+  userId     String
+  cocktailId String
+  price      Float    @default(0) // 售价
+  cost       Float    @default(0) // 成本
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cocktail Cocktail @relation(fields: [cocktailId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cocktailId])
+}
+
+model InventoryItem {
+  id                String   @id @default(cuid())
+  userId            String
+  ingredientId      String
+  quantity          Float    @default(0)
+  unit              String   @default("ml") // 'ml'|'bottle'|'g'
+  lowStockThreshold Float    @default(0)
+  unitCost          Float    @default(0) // 进价/单位
+  updatedAt         DateTime @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ingredientId])
+}
+
+model PurchaseRecord {
+  id           String   @id @default(cuid())
+  userId       String
+  ingredientId String
+  quantity     Float
+  unit         String   @default("ml")
+  totalCost    Float    @default(0)
+  purchasedAt  DateTime
+  note         String?
+  createdAt    DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+}

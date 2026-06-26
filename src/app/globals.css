@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #f5f3ee;
+  --ink: #1c1a17;
+  --muted: #8a847b;
+  --card: #ffffff;
+  --border: #e7e3da;
+  --accent: #c9822f;
+  --accent-soft: #f3e3cf;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+}
+
+.dark {
+  --cream: #16140f;
+  --ink: #f3efe6;
+  --muted: #9c958a;
+  --card: #211e18;
+  --border: #34302a;
+  --accent: #e0a04f;
+  --accent-soft: #3a2f1f;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Hide scrollbars on horizontal chip rows while keeping scroll behavior. */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Minimal article typography for the knowledge base markdown. */
+.prose-cocktail {
+  color: var(--ink);
+  line-height: 1.75;
+}
+.prose-cocktail h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+.prose-cocktail h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+}
+.prose-cocktail p {
+  margin: 0.75rem 0;
+}
+.prose-cocktail ul,
+.prose-cocktail ol {
+  margin: 0.75rem 0;
+  padding-left: 1.4rem;
+  list-style: revert;
+}
+.prose-cocktail li {
+  margin: 0.35rem 0;
+}
+.prose-cocktail strong {
+  font-weight: 700;
+}
