@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PencilLine, ArrowRight, CalendarDays } from "lucide-react";
+import { PencilLine, ArrowRight, CalendarDays, FlaskConical } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { toCocktailDTO } from "@/lib/dto";
 import { COCKTAIL_CATEGORIES } from "@/lib/constants";
@@ -31,10 +31,16 @@ export default async function HomePage() {
           <PencilLine className="h-4 w-4" /> 随手记一杯
         </Link>
         <Link
-          href="/bar"
-          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-5 py-4 text-sm font-medium text-ink transition hover:bg-cream"
+          href="/my/cocktails/new"
+          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-4 text-sm font-medium text-ink transition hover:bg-cream"
         >
-          去吧台 <ArrowRight className="h-4 w-4" />
+          <FlaskConical className="h-4 w-4" /> 加配方
+        </Link>
+        <Link
+          href="/bar"
+          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-4 text-sm font-medium text-ink transition hover:bg-cream"
+        >
+          吧台 <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
 
