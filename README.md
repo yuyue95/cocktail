@@ -10,6 +10,7 @@
 |------|------------|------------|
 | 首页配方推荐 + 搜索 | ✅ | ✅ |
 | 配方详情 / 知识库 | ✅ | ✅ |
+| 我的配方库（私有，可不断新增，搜索可搜到） | ✅ | ✅ |
 | 日历 | 品饮日记 + 口感评分 + 调酒思考 | 每日营业记账 + 月度报表 |
 | 吧台 | 我的材料 → 「现在能做什么酒」推荐 | 酒单定价 + 库存预警 + 进货 |
 | 收藏 / 想做清单 | ✅ | ✅ |
@@ -61,10 +62,23 @@ pnpm dev              # http://localhost:3000
 报 `ECONNRESET`，用 curl 手动获取引擎即可（普通网络 / Vercel 部署不受影响，无需此步骤）。
 `package.json` 中已关闭 Prisma 的 postinstall 自动下载（`pnpm.onlyBuiltDependencies` 仅保留 esbuild）。
 
+## 我的配方库（个人知识库）
+
+除了管理员维护的全局酒库（`Cocktail`，只有管理员能增改），每位用户都能在
+**「我的 → 我的配方库」** 里录入自己的配方：材料、用量、步骤、口味、杯型、调酒思考。
+
+- **私有**：只有本人可见、可编辑、可删除。
+- **越用越丰富**：随手把调过/想记的酒加进来，个人知识库不断累积。
+- **可被搜到**：首页搜索会把「我的配方」与全局「酒谱库」分组一并返回，
+  且支持按材料名搜索（材料以自由文本存储，无需等管理员补录原料）。
+
+涉及文件：模型 `UserCocktail`；接口 `/api/my/cocktails`（增删改查）；
+页面 `/my/cocktails`（列表 / 新建 / 详情 / 编辑）；搜索接口 `/api/search` 已扩展。
+
 ## 数据模型（核心）
 
 `User`(含 mode) · `Cocktail` ↔ `CocktailIngredient` ↔ `Ingredient` · `Article`
-喝酒：`DrinkLog` · `UserIngredient` · `UserCocktailList`
+喝酒：`DrinkLog` · `UserIngredient` · `UserCocktailList` · `UserCocktail`（个人配方库）
 卖酒：`BusinessLog` ↔ `Sale` · `BarMenuItem` · `InventoryItem` · `PurchaseRecord`
 
 > SQLite 不支持枚举 / 数组：枚举以 String 存储（取值见 `lib/constants.ts`），

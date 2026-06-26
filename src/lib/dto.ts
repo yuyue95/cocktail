@@ -2,8 +2,13 @@ import type {
   Cocktail,
   CocktailIngredient,
   Ingredient,
+  UserCocktail,
 } from "@prisma/client";
-import { parseStringArray } from "@/lib/serialize";
+import {
+  parseStringArray,
+  parseRecipeIngredients,
+  type RecipeIngredient,
+} from "@/lib/serialize";
 
 // Client-facing shapes: JSON string fields are parsed into real arrays here so
 // no component ever deals with the SQLite storage format.
@@ -33,5 +38,25 @@ export function toCocktailWithIngredientsDTO(
   return {
     ...toCocktailDTO(c),
     ingredients: c.ingredients,
+  };
+}
+
+// Personal recipe DTO: parses both the tag/step string arrays and the
+// free-text ingredient JSON into real arrays.
+export type UserCocktailDTO = Omit<
+  UserCocktail,
+  "flavorTags" | "instructions" | "ingredients"
+> & {
+  flavorTags: string[];
+  instructions: string[];
+  ingredients: RecipeIngredient[];
+};
+
+export function toUserCocktailDTO(c: UserCocktail): UserCocktailDTO {
+  return {
+    ...c,
+    flavorTags: parseStringArray(c.flavorTags),
+    instructions: parseStringArray(c.instructions),
+    ingredients: parseRecipeIngredients(c.ingredients),
   };
 }

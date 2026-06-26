@@ -97,6 +97,30 @@ export const adminCocktailSchema = z.object({
     .default([]),
 });
 
+// Personal recipe (UserCocktail) create/update payload. Ingredients are
+// free-text (name + amount), not tied to the master Ingredient list.
+export const userCocktailSchema = z.object({
+  name: z.string().min(1, "请输入名称").max(60),
+  nameEn: z.string().max(80).optional().nullable(),
+  category: z.string().min(1, "请选择分类"),
+  flavorTags: z.array(z.string()).default([]),
+  glassType: z.string().max(40).optional().nullable(),
+  garnish: z.string().max(60).optional().nullable(),
+  description: z.string().max(2000).optional().nullable(),
+  instructions: z.array(z.string()).default([]),
+  imageUrl: z.string().max(500).optional().nullable(),
+  difficulty: z.enum(["easy", "medium", "hard"]).default("easy"),
+  ingredients: z
+    .array(
+      z.object({
+        name: z.string().min(1, "请输入材料名"),
+        amount: z.string().max(40).default(""),
+        isOptional: z.boolean().default(false),
+      })
+    )
+    .min(1, "至少添加一种材料"),
+});
+
 // Admin: ingredient create/update payload.
 export const adminIngredientSchema = z.object({
   name: z.string().min(1, "请输入名称"),
@@ -119,4 +143,5 @@ export const adminArticleSchema = z.object({
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type UserCocktailInput = z.infer<typeof userCocktailSchema>;
 export type DrinkLogInput = z.infer<typeof drinkLogSchema>;

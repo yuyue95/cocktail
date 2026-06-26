@@ -4,14 +4,18 @@ import { useState, useEffect, useCallback } from "react";
 import { Search, BookOpen } from "lucide-react";
 import Link from "next/link";
 import CocktailCard from "@/components/cocktail/CocktailCard";
+import MyCocktailCard from "@/components/cocktail/MyCocktailCard";
 import { getJSON } from "@/lib/fetcher";
 import { BASE_SPIRIT_FILTERS } from "@/lib/constants";
-import type { CocktailDTO } from "@/lib/dto";
+import type { CocktailDTO, UserCocktailDTO } from "@/lib/dto";
 
 type SearchResult = {
   cocktails: CocktailDTO[];
+  myCocktails: UserCocktailDTO[];
   articles: { id: string; title: string; slug: string; category: string | null }[];
 };
+
+const EMPTY_RESULT: SearchResult = { cocktails: [], myCocktails: [], articles: [] };
 
 // Home page search area (replaces the standalone 探索 page). Debounced live
 // search over cocktails + articles, with base-spirit quick filters.
@@ -33,7 +37,7 @@ export default function SearchSection() {
       );
       setResult(data);
     } catch {
-      setResult({ cocktails: [], articles: [] });
+      setResult(EMPTY_RESULT);
     } finally {
       setLoading(false);
     }
@@ -82,17 +86,38 @@ export default function SearchSection() {
       <div className="mt-4">
         {loading && <p className="py-6 text-center text-sm text-muted">搜索中…</p>}
 
-        {!loading && result && result.cocktails.length === 0 && result.articles.length === 0 && (
-          <p className="py-6 text-center text-sm text-muted">
-            没找到「{query}」，换个关键词试试
-          </p>
+        {!loading &&
+          result &&
+          result.cocktails.length === 0 &&
+          result.myCocktails.length === 0 &&
+          result.articles.length === 0 && (
+            <p className="py-6 text-center text-sm text-muted">
+              没找到「{query}」，换个关键词试试
+            </p>
+          )}
+
+        {/* Personal recipes first — they're the user's own work. */}
+        {!loading && result && result.myCocktails.length > 0 && (
+          <div className="mb-5">
+            <p className="mb-2 text-sm font-medium text-muted">我的配方</p>
+            <div className="grid grid-cols-2 gap-3">
+              {result.myCocktails.map((c) => (
+                <MyCocktailCard key={c.id} cocktail={c} />
+              ))}
+            </div>
+          </div>
         )}
 
         {!loading && result && result.cocktails.length > 0 && (
-          <div className="grid grid-cols-2 gap-3">
-            {result.cocktails.map((c) => (
-              <CocktailCard key={c.id} cocktail={c} />
-            ))}
+          <div>
+            {result.myCocktails.length > 0 && (
+              <p className="mb-2 text-sm font-medium text-muted">酒谱库</p>
+            )}
+            <div className="grid grid-cols-2 gap-3">
+              {result.cocktails.map((c) => (
+                <CocktailCard key={c.id} cocktail={c} />
+              ))}
+            </div>
           </div>
         )}
       </div>

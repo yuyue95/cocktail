@@ -1,10 +1,13 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ok, errors } from "@/lib/api";
-import { toCocktailDTO } from "@/lib/dto";
+import { toCocktailDTO, toUserCocktailDTO } from "@/lib/dto";
+import { getCurrentUser } from "@/lib/session";
 
 // GET /api/search?q=&type=cocktail|article|all
-// Output: { data: { cocktails, articles } }
+// Output: { data: { cocktails, myCocktails, articles } }
+//   - cocktails:   global published library
+//   - myCocktails: the signed-in user's personal recipes (empty if anon)
 // Errors: 400 when q is empty
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
@@ -15,6 +18,7 @@ export async function GET(req: NextRequest) {
 
   const wantCocktails = type === "all" || type === "cocktail";
   const wantArticles = type === "all" || type === "article";
+  const user = wantCocktails ? await getCurrentUser() : null;
 
   // Search cocktails by name/nameEn and by linked ingredient name.
   const cocktails = wantCocktails
@@ -40,6 +44,23 @@ export async function GET(req: NextRequest) {
       })
     : [];
 
+  // Personal recipes search the free-text ingredient JSON too, so a material
+  // the user jotted down ("青柠") still surfaces their recipe.
+  const myCocktails = user
+    ? await prisma.userCocktail.findMany({
+        where: {
+          userId: user.id,
+          OR: [
+            { name: { contains: q } },
+            { nameEn: { contains: q } },
+            { description: { contains: q } },
+            { ingredients: { contains: q } },
+          ],
+        },
+        take: 30,
+      })
+    : [];
+
   const articles = wantArticles
     ? await prisma.article.findMany({
         where: {
@@ -51,5 +72,9 @@ export async function GET(req: NextRequest) {
       })
     : [];
 
-  return ok({ cocktails: cocktails.map(toCocktailDTO), articles });
+  return ok({
+    cocktails: cocktails.map(toCocktailDTO),
+    myCocktails: myCocktails.map(toUserCocktailDTO),
+    articles,
+  });
 }

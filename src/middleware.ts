@@ -33,6 +33,7 @@ export const config = {
     "/calendar/:path*",
     "/bar/:path*",
     "/profile/:path*",
+    "/my/:path*",
     "/onboarding",
     "/admin/:path*",
   ],

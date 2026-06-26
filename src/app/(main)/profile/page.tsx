@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Heart, BookmarkPlus, History, ShieldCheck, PackagePlus } from "lucide-react";
+import { Heart, BookmarkPlus, History, ShieldCheck, PackagePlus, FlaskConical } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { USER_MODES } from "@/lib/constants";
@@ -57,6 +57,11 @@ export default async function ProfilePage() {
 
       {/* Quick links */}
       <div className="mt-4 space-y-2">
+        <ProfileLink
+          href="/my/cocktails"
+          icon={<FlaskConical className="h-4 w-4" />}
+          label="我的配方库"
+        />
         <ProfileLink href="/bar" icon={<Heart className="h-4 w-4" />} label="我的收藏与想做" />
         <ProfileLink
           href="/calendar"

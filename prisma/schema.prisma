@@ -35,6 +35,35 @@ model User {
   barMenu         BarMenuItem[]
   inventory       InventoryItem[]
   purchases       PurchaseRecord[]
+  userCocktails   UserCocktail[]
+}
+
+// Personal recipe library. Each user builds their own collection of recipes;
+// these are private (only visible/searchable to their owner) and never touch
+// the global Cocktail library, which only an admin can curate. Ingredients are
+// stored as free-text JSON (no FK to the master Ingredient list) so users can
+// jot down whatever they used without waiting for an admin to add it.
+model UserCocktail {
+  id           String   @id @default(cuid())
+  userId       String
+  name         String // 中文名
+  nameEn       String?
+  category     String   @default("便利店调酒")
+  flavorTags   String   @default("[]") // JSON string[]
+  glassType    String?
+  garnish      String?
+  description  String?
+  instructions String   @default("[]") // JSON string[]
+  ingredients  String   @default("[]") // JSON {name, amount, isOptional}[]
+  imageUrl     String?
+  difficulty   String   @default("easy") // 'easy'|'medium'|'hard'
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name])
+  @@index([userId])
 }
 
 model Ingredient {
