@@ -47,7 +47,9 @@ src/
 
 ## 本地运行
 
+
 ```bash
+cp .env.example .env  #之所以 .env 不进仓库，是因为生产环境里它会放真实的数据库地址和密钥（不能泄露到 Git）。本地开发每个人自己 cp 一份即可
 pnpm install
 pnpm db:push          # 按 schema 建库
 pnpm db:seed          # 导入 55 款酒谱 / 43 原料 / 5 篇文章（含 IBA 官方及公开出版的权威经典配方）
