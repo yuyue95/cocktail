@@ -50,7 +50,7 @@ src/
 ```bash
 pnpm install
 pnpm db:push          # 按 schema 建库
-pnpm db:seed          # 导入 20 款酒谱 / 30 原料 / 5 篇文章
+pnpm db:seed          # 导入 34 款酒谱 / 38 原料 / 5 篇文章（含 14 款 IBA 官方权威配方）
 pnpm dev              # http://localhost:3000
 ```
 

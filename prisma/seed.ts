@@ -46,6 +46,15 @@ const ingredients: {
   { name: "薄荷叶", nameEn: "Mint", type: "garnish", description: "清凉香草，拍打释放香气，莫吉托的标配。" },
   { name: "盐", nameEn: "Salt", type: "garnish", description: "用于杯口抹盐圈，平衡并提亮风味。" },
   { name: "安格仕苦精", nameEn: "Angostura Bitters", type: "other", abv: 44, description: "高浓度草本苦精，几滴即可为酒体增添复杂的香料尾韵。" },
+  // —— 为权威 IBA 配方补充的原料 ——
+  { name: "红石榴糖浆", nameEn: "Grenadine", type: "syrup", description: "石榴风味的红色糖浆，带来甜味与红艳色泽，是龙舌兰日出渐层的来源。" },
+  { name: "西柚味汽水", nameEn: "Grapefruit Soda", type: "mixer", description: "带西柚果味的甜气泡饮，清爽微苦，帕洛玛的灵魂。" },
+  { name: "蜜桃利口酒", nameEn: "Peach Schnapps", type: "liqueur", abv: 20, description: "蜜桃风味的甜利口酒，果香浓郁，性感沙滩等果味调饮的关键。" },
+  { name: "法勒纳姆", nameEn: "Falernum", type: "liqueur", abv: 11, description: "源自加勒比的香料利口酒，融合青柠、丁香、姜与杏仁，提基风格的秘密武器。" },
+  { name: "苦艾酒", nameEn: "Absinthe", type: "base_spirit", abv: 60, description: "高酒精度的茴香草本烈酒，仅需几滴便能为酒体铺上清凉的茴芹尾韵。" },
+  { name: "肉桂糖浆", nameEn: "Cinnamon Syrup", type: "syrup", description: "以肉桂熬制的香料糖浆，温暖辛香，常见于提基与冬季调饮。" },
+  { name: "高度朗姆酒", nameEn: "Overproof Rum", type: "base_spirit", abv: 63, description: "酒精度极高的朗姆（如 151），少量即可强化酒体与香气，是僵尸等提基酒款的脊梁。" },
+  { name: "利莱白", nameEn: "Lillet Blanc", type: "liqueur", abv: 17, description: "波尔多产的加香开胃葡萄酒，柑橘与花蜜般的香气，维斯帕马天尼的点睛之笔。" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -204,6 +213,109 @@ const cocktails: {
     description: "为聚会而生的大份量调饮。一次调一大桶，朗姆、果汁与气泡混合，自取自酌，热闹又省事。",
     instructions: ["大容器中混合白朗姆、菠萝汁、橙汁、蔓越莓汁", "加入大量冰块", "上桌前补入苏打水", "投入时令水果块"],
     recipe: [{ name: "白朗姆酒", amount: "300ml" }, { name: "菠萝汁", amount: "300ml" }, { name: "橙汁", amount: "200ml" }, { name: "蔓越莓汁", amount: "200ml" }, { name: "苏打水", amount: "400ml" }],
+  },
+
+  // =========================================================================
+  // 权威 IBA 官方配方（按 IBA 2020 官方配比，原创品鉴文案）
+  // 分类沿用 IBA 官方三类：难忘经典 / 当代经典 / 新时代创新
+  // =========================================================================
+  {
+    name: "美国佬", nameEn: "Americano", slug: "americano", category: "IBA-难忘经典",
+    flavorTags: ["苦", "清爽", "层次丰富"], glassType: "古典杯", garnish: "橙片与柠檬皮", difficulty: "easy",
+    description: "尼格罗尼的前身，把烈酒换成了苏打水。金巴利与甜味美思等量交织出柑橘草本的微苦，气泡让整杯轻盈起来，是开胃酒的经典模样。",
+    instructions: ["古典杯中加冰", "倒入金巴利与甜味美思", "补满苏打水，轻搅", "以橙片与柠檬皮装饰"],
+    recipe: [{ name: "金巴利", amount: "30ml" }, { name: "甜味美思", amount: "30ml" }, { name: "苏打水", amount: "适量" }],
+  },
+  {
+    name: "约翰柯林斯", nameEn: "John Collins", slug: "john-collins", category: "IBA-难忘经典",
+    flavorTags: ["清爽", "酸", "甜"], glassType: "高球杯", garnish: "柠檬片与樱桃", difficulty: "easy",
+    description: "金酒版的柠檬气泡长饮。柠檬与糖浆撑起酸甜骨架，苏打水拉长酒体，一滴苦精收尾，清爽得能喝一整个下午。",
+    instructions: ["摇壶加冰，倒入金酒、柠檬汁、糖浆，摇匀", "滤入加冰的高球杯", "补满苏打水，滴入苦精", "以柠檬片与樱桃装饰"],
+    recipe: [{ name: "金酒", amount: "45ml" }, { name: "柠檬汁", amount: "30ml" }, { name: "糖浆", amount: "15ml" }, { name: "苏打水", amount: "60ml" }, { name: "安格仕苦精", amount: "1 dash", optional: true }],
+  },
+  {
+    name: "金菲士", nameEn: "Gin Fizz", slug: "gin-fizz", category: "IBA-难忘经典",
+    flavorTags: ["清爽", "酸", "气泡"], glassType: "高球杯", garnish: "柠檬片", difficulty: "medium",
+    description: "酸味家族里最爱冒泡的一员。金酒、柠檬与糖浆摇匀后注入苏打，绵密细泡裹着草本与柑橘，入口爽利清新。",
+    instructions: ["摇壶加冰，倒入金酒、柠檬汁、糖浆", "充分摇匀", "滤入加冰的高球杯", "补满苏打水，以柠檬片装饰"],
+    recipe: [{ name: "金酒", amount: "45ml" }, { name: "柠檬汁", amount: "30ml" }, { name: "糖浆", amount: "10ml" }, { name: "苏打水", amount: "80ml" }],
+  },
+  {
+    name: "边车", nameEn: "Sidecar", slug: "sidecar", category: "IBA-难忘经典",
+    flavorTags: ["酸", "果香", "厚重"], glassType: "马天尼杯", garnish: "糖圈与柠檬皮", difficulty: "medium",
+    description: "禁酒令时代的优雅产物。干邑的果木温度、橙皮利口酒的明亮与柠檬的尖锐三者咬合，杯口一圈糖更添层次。",
+    instructions: ["杯口可抹一圈糖备用", "摇壶加冰，倒入白兰地、橙皮利口酒、柠檬汁", "充分摇匀", "滤入冰镇杯，柠檬皮装饰"],
+    recipe: [{ name: "白兰地", amount: "50ml" }, { name: "橙皮利口酒", amount: "20ml" }, { name: "柠檬汁", amount: "20ml" }],
+  },
+  {
+    name: "白色佳人", nameEn: "White Lady", slug: "white-lady", category: "IBA-难忘经典",
+    flavorTags: ["酸", "清爽", "顺口"], glassType: "马天尼杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "边车的金酒姊妹。金酒的草本被橙皮利口酒的甜与柠檬的酸包裹，可选的蛋清让口感更绵柔，明亮又不失骨架。",
+    instructions: ["摇壶中倒入金酒、橙皮利口酒、柠檬汁（可加蛋清）", "如加蛋清先不加冰干摇起泡", "再加冰摇匀", "滤入冰镇杯，柠檬皮装饰"],
+    recipe: [{ name: "金酒", amount: "40ml" }, { name: "橙皮利口酒", amount: "30ml" }, { name: "柠檬汁", amount: "20ml" }, { name: "蛋清", amount: "1个", optional: true }],
+  },
+  {
+    name: "花花公子", nameEn: "Boulevardier", slug: "boulevardier", category: "IBA-难忘经典",
+    flavorTags: ["苦", "厚重", "层次丰富"], glassType: "古典杯", garnish: "橙皮", difficulty: "easy",
+    description: "尼格罗尼穿上威士忌外套。波本的甜润温暖中和了金巴利的苦，甜味美思牵线，醇厚而有大人味。",
+    instructions: ["搅拌杯中加冰", "倒入波本、金巴利、甜味美思", "搅拌至冰凉", "滤入加冰古典杯，扭橙皮投入"],
+    recipe: [{ name: "波本威士忌", amount: "30ml" }, { name: "金巴利", amount: "30ml" }, { name: "甜味美思", amount: "30ml" }],
+  },
+  {
+    name: "维斯帕", nameEn: "Vesper", slug: "vesper", category: "IBA-难忘经典",
+    flavorTags: ["厚重", "干冽", "顺口"], glassType: "马天尼杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "007 点单的那杯马天尼。金酒与伏特加叠出更冷冽的酒体，一抹利莱白带来柑橘与花蜜的余韵，干净利落。",
+    instructions: ["摇壶加冰，倒入金酒、伏特加、利莱白", "充分摇匀至冰镇", "滤入冰镇马天尼杯", "扭柠檬皮释放精油后装饰"],
+    recipe: [{ name: "金酒", amount: "60ml" }, { name: "伏特加", amount: "15ml" }, { name: "利莱白", amount: "7.5ml" }],
+  },
+  {
+    name: "黑俄罗斯", nameEn: "Black Russian", slug: "black-russian", category: "IBA-当代经典",
+    flavorTags: ["厚重", "甜", "顺口"], glassType: "古典杯", garnish: "无", difficulty: "easy",
+    description: "只用两样东西就成立的经典。伏特加的干净底子上铺一层咖啡利口酒的浓甜，简单直接，餐后一杯刚刚好。",
+    instructions: ["古典杯中加入冰块", "倒入伏特加", "缓缓注入咖啡利口酒", "饮前轻搅"],
+    recipe: [{ name: "伏特加", amount: "50ml" }, { name: "咖啡利口酒", amount: "20ml" }],
+  },
+  {
+    name: "龙舌兰日出", nameEn: "Tequila Sunrise", slug: "tequila-sunrise", category: "IBA-当代经典",
+    flavorTags: ["果香", "甜"], glassType: "高球杯", garnish: "橙片与樱桃", difficulty: "easy",
+    description: "杯中真的有一场日出。龙舌兰兑满橙汁，沉入杯底的红石榴糖浆缓缓晕染出橙红渐层，甜润讨喜，颜值满分。",
+    instructions: ["高球杯加冰，倒入龙舌兰与橙汁，轻搅", "沿杯壁缓缓倒入红石榴糖浆，使其沉底", "静置形成渐层", "以橙片与樱桃装饰"],
+    recipe: [{ name: "龙舌兰", amount: "45ml" }, { name: "橙汁", amount: "90ml" }, { name: "红石榴糖浆", amount: "15ml" }],
+  },
+  {
+    name: "海风", nameEn: "Sea Breeze", slug: "sea-breeze", category: "IBA-当代经典",
+    flavorTags: ["清爽", "果香", "酸"], glassType: "高球杯", garnish: "青柠角", difficulty: "easy",
+    description: "海边度假的味道。伏特加几乎隐身，蔓越莓的酸涩与西柚的微苦交错，红粉色泽清爽宜人，咕咚几口就见底。",
+    instructions: ["高球杯加满冰", "倒入伏特加", "补入蔓越莓汁与西柚汁", "轻搅，青柠角装饰"],
+    recipe: [{ name: "伏特加", amount: "40ml" }, { name: "蔓越莓汁", amount: "120ml" }, { name: "西柚汁", amount: "30ml" }],
+  },
+  {
+    name: "长岛冰茶", nameEn: "Long Island Iced Tea", slug: "long-island-iced-tea", category: "IBA-当代经典",
+    flavorTags: ["厚重", "顺口", "果香"], glassType: "高球杯", garnish: "柠檬角", difficulty: "medium",
+    description: "不含一滴茶，却像冰红茶一样好入口的危险存在。四种白色烈酒加橙皮利口酒，柠檬与可乐调出茶色，后劲十足。",
+    instructions: ["高球杯加满冰", "依次倒入龙舌兰、伏特加、白朗姆、金酒、橙皮利口酒", "加入柠檬汁与糖浆，轻搅", "补满可乐，以柠檬角装饰"],
+    recipe: [{ name: "龙舌兰", amount: "15ml" }, { name: "伏特加", amount: "15ml" }, { name: "白朗姆酒", amount: "15ml" }, { name: "金酒", amount: "15ml" }, { name: "橙皮利口酒", amount: "15ml" }, { name: "柠檬汁", amount: "25ml" }, { name: "糖浆", amount: "30ml" }, { name: "可乐", amount: "适量" }],
+  },
+  {
+    name: "性感沙滩", nameEn: "Sex on the Beach", slug: "sex-on-the-beach", category: "IBA-当代经典",
+    flavorTags: ["果香", "甜", "顺口"], glassType: "高球杯", garnish: "橙片", difficulty: "easy",
+    description: "名字比味道更出名的派对常客。伏特加配蜜桃利口酒，蔓越莓与橙汁双果汁层层叠叠，甜美奔放，几乎尝不到酒精。",
+    instructions: ["高球杯加满冰", "倒入伏特加与蜜桃利口酒", "补入蔓越莓汁与橙汁", "轻搅，橙片装饰"],
+    recipe: [{ name: "伏特加", amount: "40ml" }, { name: "蜜桃利口酒", amount: "20ml" }, { name: "蔓越莓汁", amount: "40ml" }, { name: "橙汁", amount: "40ml" }],
+  },
+  {
+    name: "僵尸", nameEn: "Zombie", slug: "zombie", category: "IBA-当代经典",
+    flavorTags: ["厚重", "果香", "层次丰富"], glassType: "高球杯", garnish: "薄荷叶", difficulty: "hard",
+    description: "提基酒文化的图腾，一杯能放倒人的烈性长饮。三种朗姆叠加法勒纳姆、肉桂与香料，复杂香气下藏着惊人的酒精度，浅尝即止。",
+    instructions: ["摇壶加冰，倒入三种朗姆、青柠汁、法勒纳姆、西柚汁、肉桂糖浆、红石榴糖浆、苦精与苦艾酒", "短暂摇匀", "连冰倒入高球杯", "以薄荷叶装饰，插吸管"],
+    recipe: [{ name: "白朗姆酒", amount: "45ml" }, { name: "黑朗姆酒", amount: "45ml" }, { name: "高度朗姆酒", amount: "30ml" }, { name: "青柠汁", amount: "20ml" }, { name: "法勒纳姆", amount: "15ml" }, { name: "西柚汁", amount: "10ml" }, { name: "肉桂糖浆", amount: "10ml" }, { name: "红石榴糖浆", amount: "10ml" }, { name: "安格仕苦精", amount: "1 dash" }, { name: "苦艾酒", amount: "少量" }],
+  },
+  {
+    name: "帕洛玛", nameEn: "Paloma", slug: "paloma", category: "IBA-新时代创新",
+    flavorTags: ["清爽", "果香", "微咸"], glassType: "高球杯", garnish: "青柠角", difficulty: "easy",
+    description: "墨西哥比玛格丽特更日常的国民饮品。龙舌兰兑满西柚汽水，一撮盐提亮，气泡清爽中带着西柚的微苦回甘。",
+    instructions: ["高球杯加冰，可先抹一圈盐", "倒入龙舌兰，挤入少许青柠汁", "补满西柚味汽水", "轻搅，青柠角装饰"],
+    recipe: [{ name: "龙舌兰", amount: "50ml" }, { name: "西柚味汽水", amount: "100ml" }, { name: "青柠汁", amount: "10ml" }, { name: "盐", amount: "适量", optional: true }],
   },
 ];
 
