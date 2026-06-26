@@ -55,6 +55,12 @@ const ingredients: {
   { name: "肉桂糖浆", nameEn: "Cinnamon Syrup", type: "syrup", description: "以肉桂熬制的香料糖浆，温暖辛香，常见于提基与冬季调饮。" },
   { name: "高度朗姆酒", nameEn: "Overproof Rum", type: "base_spirit", abv: 63, description: "酒精度极高的朗姆（如 151），少量即可强化酒体与香气，是僵尸等提基酒款的脊梁。" },
   { name: "利莱白", nameEn: "Lillet Blanc", type: "liqueur", abv: 17, description: "波尔多产的加香开胃葡萄酒，柑橘与花蜜般的香气，维斯帕马天尼的点睛之笔。" },
+  // —— 为更多权威经典补充的原料 ——
+  { name: "椰子奶油", nameEn: "Cream of Coconut", type: "other", description: "甜润浓稠的椰子奶油，椰林飘香与止痛药的灵魂，带来热带的丝滑口感。" },
+  { name: "青柠甜浆", nameEn: "Lime Cordial", type: "syrup", description: "加糖的浓缩青柠糖浆（如 Rose's），酸甜浓郁，是金蕾的经典酸源。" },
+  { name: "姜啤", nameEn: "Ginger Beer", type: "mixer", description: "比姜汁汽水更辛辣浓烈的发酵姜味气泡饮，莫斯科骡子不可或缺。" },
+  { name: "阿玛雷托", nameEn: "Amaretto", type: "liqueur", abv: 24, description: "意大利杏仁风味甜利口酒，杏仁与杏核的香甜，教父的另一半。" },
+  { name: "杏仁糖浆", nameEn: "Orgeat", type: "syrup", description: "以杏仁、糖与橙花水制成的糖浆，坚果花香交织，提基鸡尾酒的标志性甜味。" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -316,6 +322,158 @@ const cocktails: {
     description: "墨西哥比玛格丽特更日常的国民饮品。龙舌兰兑满西柚汽水，一撮盐提亮，气泡清爽中带着西柚的微苦回甘。",
     instructions: ["高球杯加冰，可先抹一圈盐", "倒入龙舌兰，挤入少许青柠汁", "补满西柚味汽水", "轻搅，青柠角装饰"],
     recipe: [{ name: "龙舌兰", amount: "50ml" }, { name: "西柚味汽水", amount: "100ml" }, { name: "青柠汁", amount: "10ml" }, { name: "盐", amount: "适量", optional: true }],
+  },
+
+  // =========================================================================
+  // 更多权威经典（取自公开出版的经典配方：Savoy / Difford's / Death & Co 等，
+  // 仅录有定本的款式，店主自创特调不录）
+  // =========================================================================
+  {
+    name: "嗨棒", nameEn: "Highball", slug: "highball", category: "畅爽气泡 (The Highball Family)",
+    flavorTags: ["清爽", "顺口", "气泡"], glassType: "高球杯", garnish: "柠檬皮", difficulty: "easy",
+    description: "日式酒吧的国民长饮。冰镇威士忌兑足量苏打，讲究的是冰、气泡与轻盈，越简单越见功力。",
+    instructions: ["高球杯装满冰，搅凉后倒掉融水", "倒入威士忌，再补一次冰", "沿杯壁缓缓注入苏打水", "轻提一下吧勺，柠檬皮装饰"],
+    recipe: [{ name: "威士忌", amount: "45ml" }, { name: "苏打水", amount: "120ml" }],
+  },
+  {
+    name: "斯普莫尼", nameEn: "Spumoni", slug: "spumoni", category: "畅爽气泡 (The Highball Family)",
+    flavorTags: ["苦", "清爽", "果香"], glassType: "高球杯", garnish: "西柚皮", difficulty: "easy",
+    description: "意大利的西柚版美国佬。金巴利的微苦遇上西柚汁的清新，再以汤力水拉长，苦甜爽口，开胃一流。",
+    instructions: ["高球杯加满冰", "倒入金巴利与西柚汁", "补满汤力水", "轻搅，西柚皮装饰"],
+    recipe: [{ name: "金巴利", amount: "30ml" }, { name: "西柚汁", amount: "90ml" }, { name: "汤力水", amount: "60ml" }],
+  },
+  {
+    name: "法兰西75", nameEn: "French 75", slug: "french-75", category: "IBA-当代经典",
+    flavorTags: ["清爽", "酸", "气泡"], glassType: "笛形香槟杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "以一战火炮命名的香槟鸡尾酒。金酒与柠檬的酸甜被气泡酒托起，明亮锐利，气场十足。",
+    instructions: ["摇壶加冰，倒入金酒、柠檬汁、糖浆，摇匀", "滤入冰镇香槟杯", "补满气泡酒", "扭柠檬皮装饰"],
+    recipe: [{ name: "金酒", amount: "30ml" }, { name: "柠檬汁", amount: "15ml" }, { name: "糖浆", amount: "15ml" }, { name: "气泡酒", amount: "60ml" }],
+  },
+  {
+    name: "莫斯科骡子", nameEn: "Moscow Mule", slug: "moscow-mule", category: "IBA-当代经典",
+    flavorTags: ["清爽", "微辣", "顺口"], glassType: "铜杯", garnish: "青柠角", difficulty: "easy",
+    description: "盛在铜杯里的辛辣气泡。伏特加打底，姜啤的辣与青柠的酸让整杯生机勃勃，冰爽过瘾。",
+    instructions: ["铜杯或高球杯加满冰", "挤入青柠汁，倒入伏特加", "补满姜啤", "轻搅，青柠角装饰"],
+    recipe: [{ name: "伏特加", amount: "45ml" }, { name: "青柠汁", amount: "15ml" }, { name: "姜啤", amount: "120ml" }],
+  },
+  {
+    name: "加里波第", nameEn: "Garibaldi", slug: "garibaldi", category: "馥郁果香 (The Fruity & Tropical Family)",
+    flavorTags: ["果香", "苦", "顺口"], glassType: "高球杯", garnish: "橙片", difficulty: "easy",
+    description: "“把金巴利和橙汁连接起来”的两材料经典。关键在于把橙汁打到蓬松起泡，苦甜交融、口感绵密。",
+    instructions: ["将橙汁高速打发至蓬松", "高球杯加满冰，倒入金巴利", "缓缓注入打发橙汁", "橙片装饰"],
+    recipe: [{ name: "金巴利", amount: "45ml" }, { name: "橙汁", amount: "120ml" }],
+  },
+  {
+    name: "丛林鸟", nameEn: "Jungle Bird", slug: "jungle-bird", category: "馥郁果香 (The Fruity & Tropical Family)",
+    flavorTags: ["果香", "苦", "层次丰富"], glassType: "古典杯", garnish: "菠萝叶", difficulty: "medium",
+    description: "1978 年诞生于吉隆坡的提基经典，提基复兴的宠儿。黑朗姆与菠萝的甜被金巴利的苦切开，热带却不腻。",
+    instructions: ["摇壶加冰，倒入黑朗姆、金巴利、菠萝汁、青柠汁、糖浆", "充分摇匀", "滤入加冰古典杯", "菠萝叶装饰"],
+    recipe: [{ name: "黑朗姆酒", amount: "45ml" }, { name: "金巴利", amount: "18ml" }, { name: "菠萝汁", amount: "45ml" }, { name: "青柠汁", amount: "15ml" }, { name: "糖浆", amount: "15ml" }],
+  },
+  {
+    name: "止痛药", nameEn: "Painkiller", slug: "painkiller", category: "馥郁果香 (The Fruity & Tropical Family)",
+    flavorTags: ["甜", "果香", "厚重"], glassType: "高球杯", garnish: "肉豆蔻粉", difficulty: "easy",
+    description: "加勒比的热带解暑良方。黑朗姆裹着菠萝、橙与椰子奶油，绵密香甜，最后撒一层肉豆蔻提香。",
+    instructions: ["摇壶加冰，倒入黑朗姆、菠萝汁、橙汁、椰子奶油", "充分摇匀", "倒入装满碎冰的杯中", "撒肉豆蔻粉装饰"],
+    recipe: [{ name: "黑朗姆酒", amount: "60ml" }, { name: "菠萝汁", amount: "120ml" }, { name: "橙汁", amount: "30ml" }, { name: "椰子奶油", amount: "30ml" }],
+  },
+  {
+    name: "椰林飘香", nameEn: "Piña Colada", slug: "pina-colada", category: "IBA-当代经典",
+    flavorTags: ["甜", "果香", "顺口"], glassType: "飓风杯", garnish: "菠萝片与樱桃", difficulty: "easy",
+    description: "波多黎各的国民鸡尾酒。白朗姆、菠萝与椰子奶油搅打成绵密冰沙，一口就是海岛的阳光与椰林。",
+    instructions: ["搅拌机中加入白朗姆、椰子奶油、菠萝汁与一杯碎冰", "高速搅打至顺滑", "倒入飓风杯", "菠萝片与樱桃装饰"],
+    recipe: [{ name: "白朗姆酒", amount: "50ml" }, { name: "椰子奶油", amount: "30ml" }, { name: "菠萝汁", amount: "90ml" }],
+  },
+  {
+    name: "迈泰", nameEn: "Mai Tai", slug: "mai-tai", category: "IBA-当代经典",
+    flavorTags: ["果香", "层次丰富", "厚重"], glassType: "古典杯", garnish: "薄荷与青柠", difficulty: "medium",
+    description: "提基鸡尾酒的王者。陈年朗姆、橙皮利口酒与杏仁糖浆在青柠的酸里展开，坚果与柑橘的香气层层堆叠。",
+    instructions: ["摇壶加碎冰，倒入黑朗姆、橙皮利口酒、杏仁糖浆、青柠汁", "短暂摇匀", "连冰倒入古典杯", "薄荷与青柠壳装饰"],
+    recipe: [{ name: "黑朗姆酒", amount: "40ml" }, { name: "橙皮利口酒", amount: "15ml" }, { name: "杏仁糖浆", amount: "15ml" }, { name: "青柠汁", amount: "30ml" }],
+  },
+  {
+    name: "斗牛士", nameEn: "Matador", slug: "matador", category: "馥郁果香 (The Fruity & Tropical Family)",
+    flavorTags: ["果香", "酸", "清爽"], glassType: "古典杯", garnish: "菠萝角", difficulty: "easy",
+    description: "龙舌兰的热带短打。菠萝汁的浓甜与青柠的酸把龙舌兰的青草气衬得明快，简单却很讨喜。",
+    instructions: ["摇壶加冰，倒入龙舌兰、菠萝汁、青柠汁", "摇匀", "滤入加冰古典杯", "菠萝角装饰"],
+    recipe: [{ name: "龙舌兰", amount: "45ml" }, { name: "菠萝汁", amount: "60ml" }, { name: "青柠汁", amount: "15ml" }],
+  },
+  {
+    name: "内华达", nameEn: "Nevada", slug: "nevada", category: "清新酸甜 (The Sour Family)",
+    flavorTags: ["果香", "酸", "顺口"], glassType: "马天尼杯", garnish: "西柚皮", difficulty: "medium",
+    description: "朗姆与西柚的复古酸饮。西柚的微苦、青柠的尖酸与一滴苦精交织，圆润中带着清爽尾韵。",
+    instructions: ["摇壶加冰，倒入白朗姆、西柚汁、青柠汁、糖浆、苦精", "充分摇匀", "滤入冰镇杯", "西柚皮装饰"],
+    recipe: [{ name: "白朗姆酒", amount: "45ml" }, { name: "西柚汁", amount: "30ml" }, { name: "青柠汁", amount: "15ml" }, { name: "糖浆", amount: "10ml" }, { name: "安格仕苦精", amount: "1 dash" }],
+  },
+  {
+    name: "破冰船", nameEn: "Ice Breaker", slug: "ice-breaker", category: "馥郁果香 (The Fruity & Tropical Family)",
+    flavorTags: ["果香", "酸", "甜"], glassType: "古典杯", garnish: "西柚皮", difficulty: "medium",
+    description: "龙舌兰与西柚的冰爽碰撞。橙皮利口酒添香，红石榴糖浆点染粉色，是一杯色香味俱佳的破冰之选。",
+    instructions: ["搅拌机或摇壶加碎冰", "倒入龙舌兰、橙皮利口酒、西柚汁、红石榴糖浆", "搅打或摇匀", "倒入古典杯，西柚皮装饰"],
+    recipe: [{ name: "龙舌兰", amount: "30ml" }, { name: "橙皮利口酒", amount: "15ml" }, { name: "西柚汁", amount: "30ml" }, { name: "红石榴糖浆", amount: "10ml" }],
+  },
+  {
+    name: "金蕾", nameEn: "Gimlet", slug: "gimlet", category: "清新酸甜 (The Sour Family)",
+    flavorTags: ["酸", "清爽", "顺口"], glassType: "马天尼杯", garnish: "青柠片", difficulty: "easy",
+    description: "海军时代留下的极简经典。金酒与青柠甜浆，酸甜利落，干净得只剩下金酒的草本与青柠的清香。",
+    instructions: ["摇壶加冰，倒入金酒与青柠甜浆", "充分摇匀至冰镇", "滤入冰镇杯", "青柠片装饰"],
+    recipe: [{ name: "金酒", amount: "60ml" }, { name: "青柠甜浆", amount: "15ml" }],
+  },
+  {
+    name: "沉默第三者", nameEn: "Silent Third", slug: "silent-third", category: "清新酸甜 (The Sour Family)",
+    flavorTags: ["酸", "层次丰富", "顺口"], glassType: "马天尼杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "苏格兰威士忌版的边车。烟熏谷物的底色被橙皮利口酒的甜与柠檬的酸唤醒，酸甜之间藏着威士忌的厚度。",
+    instructions: ["摇壶加冰，倒入威士忌、橙皮利口酒、柠檬汁", "充分摇匀", "滤入冰镇杯", "柠檬皮装饰"],
+    recipe: [{ name: "威士忌", amount: "40ml" }, { name: "橙皮利口酒", amount: "20ml" }, { name: "柠檬汁", amount: "20ml" }],
+  },
+  {
+    name: "最后结局", nameEn: "XYZ", slug: "xyz", category: "清新酸甜 (The Sour Family)",
+    flavorTags: ["酸", "清爽", "果香"], glassType: "马天尼杯", garnish: "柠檬皮", difficulty: "easy",
+    description: "字母表的终点，也是朗姆酸味的范本。白朗姆、橙皮利口酒与柠檬的三角配比，清爽利落，被称作“朗姆界的边车”。",
+    instructions: ["摇壶加冰，倒入白朗姆、橙皮利口酒、柠檬汁", "充分摇匀", "滤入冰镇杯", "柠檬皮装饰"],
+    recipe: [{ name: "白朗姆酒", amount: "45ml" }, { name: "橙皮利口酒", amount: "20ml" }, { name: "柠檬汁", amount: "20ml" }],
+  },
+  {
+    name: "茉莉", nameEn: "Jasmine", slug: "jasmine", category: "清新酸甜 (The Sour Family)",
+    flavorTags: ["苦", "酸", "果香"], glassType: "马天尼杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "90 年代诞生的现代经典，被誉为“喝起来像西柚的金巴利”。金酒为骨，金巴利与橙皮利口酒交织，苦甜酸俱全，粉橘色泽迷人。",
+    instructions: ["摇壶加冰，倒入金酒、橙皮利口酒、金巴利、柠檬汁", "充分摇匀", "滤入冰镇杯", "柠檬皮装饰"],
+    recipe: [{ name: "金酒", amount: "45ml" }, { name: "橙皮利口酒", amount: "15ml" }, { name: "金巴利", amount: "7.5ml" }, { name: "柠檬汁", amount: "15ml" }],
+  },
+  {
+    name: "布朗克斯", nameEn: "Bronx", slug: "bronx", category: "醇厚烈酒 (The Spirit-Forward Family)",
+    flavorTags: ["果香", "层次丰富", "顺口"], glassType: "马天尼杯", garnish: "橙皮", difficulty: "medium",
+    description: "曾与马天尼、曼哈顿并列的纽约老派经典。金酒配干甜两种味美思，再加一抹橙汁，干爽中透出柑橘的圆润。",
+    instructions: ["摇壶加冰，倒入金酒、干味美思、甜味美思、橙汁", "摇匀", "滤入冰镇杯", "橙皮装饰"],
+    recipe: [{ name: "金酒", amount: "45ml" }, { name: "干味美思", amount: "15ml" }, { name: "甜味美思", amount: "15ml" }, { name: "橙汁", amount: "15ml" }],
+  },
+  {
+    name: "罗西塔", nameEn: "Rosita", slug: "rosita", category: "醇厚烈酒 (The Spirit-Forward Family)",
+    flavorTags: ["苦", "厚重", "层次丰富"], glassType: "古典杯", garnish: "柠檬皮", difficulty: "medium",
+    description: "龙舌兰版的尼格罗尼，由调酒名家 Gary Regan 发扬。龙舌兰、金巴利与双味美思层层叠加，苦甜厚重，回味悠长。",
+    instructions: ["搅拌杯加冰，倒入龙舌兰、金巴利、甜味美思、干味美思、苦精", "搅拌至冰凉", "滤入加冰古典杯", "柠檬皮装饰"],
+    recipe: [{ name: "龙舌兰", amount: "45ml" }, { name: "金巴利", amount: "15ml" }, { name: "甜味美思", amount: "15ml" }, { name: "干味美思", amount: "15ml" }, { name: "安格仕苦精", amount: "2 dash" }],
+  },
+  {
+    name: "小公主", nameEn: "Little Princess", slug: "little-princess", category: "醇厚烈酒 (The Spirit-Forward Family)",
+    flavorTags: ["厚重", "甜", "顺口"], glassType: "马天尼杯", garnish: "无", difficulty: "easy",
+    description: "朗姆版的曼哈顿雏形。白朗姆与甜味美思等量相融，简单两味却柔顺甘醇，是被低估的搅拌类经典。",
+    instructions: ["搅拌杯加冰，倒入白朗姆与甜味美思", "搅拌至充分冰镇", "滤入冰镇杯"],
+    recipe: [{ name: "白朗姆酒", amount: "45ml" }, { name: "甜味美思", amount: "45ml" }],
+  },
+  {
+    name: "亲密关系", nameEn: "Affinity", slug: "affinity", category: "醇厚烈酒 (The Spirit-Forward Family)",
+    flavorTags: ["厚重", "层次丰富", "苦"], glassType: "马天尼杯", garnish: "酒渍樱桃", difficulty: "medium",
+    description: "苏格兰版的完美马天尼。威士忌与干甜味美思各半，苦精串起烟熏与草本，沉稳内敛，越喝越有味。",
+    instructions: ["搅拌杯加冰，倒入威士忌、干味美思、甜味美思、苦精", "搅拌至冰凉", "滤入冰镇杯", "酒渍樱桃装饰"],
+    recipe: [{ name: "威士忌", amount: "30ml" }, { name: "干味美思", amount: "30ml" }, { name: "甜味美思", amount: "30ml" }, { name: "安格仕苦精", amount: "2 dash" }],
+  },
+  {
+    name: "教父", nameEn: "Godfather", slug: "godfather", category: "IBA-当代经典",
+    flavorTags: ["厚重", "甜", "层次丰富"], glassType: "古典杯", garnish: "无", difficulty: "easy",
+    description: "两味成就的醇厚经典。威士忌的烟熏与阿玛雷托的杏仁甜香交织，简单到极致，却是餐后小酌的稳妥之选。",
+    instructions: ["古典杯加入大冰块", "倒入威士忌与阿玛雷托", "轻搅至冰凉"],
+    recipe: [{ name: "威士忌", amount: "45ml" }, { name: "阿玛雷托", amount: "15ml" }],
   },
 ];
 
